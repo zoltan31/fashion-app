@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { useHistory } from "react-router";
 
 type AuthType = {
   authed: boolean;
@@ -10,6 +11,7 @@ const authContext = createContext({} as AuthType);
 
 function useAuthentication() {
   const [authed, setAuthed] = useState(false);
+  const history = useHistory();
 
   const login = async () => {
     //TODO: Fetch API
@@ -19,6 +21,7 @@ function useAuthentication() {
   const logout = async () => {
     //TODO: Fetch API
     setAuthed(false);
+    history.replace("/login");
   };
 
   return {

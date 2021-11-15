@@ -8,8 +8,8 @@ import Register from "./views/register";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Switch>
           <Route path="/login">
             <Login />
@@ -17,12 +17,12 @@ function App() {
           <Route path="/register">
             <Register />
           </Route>
-          <ProtectedRoute path="/home">
+          <ProtectedRoute path="/">
             <Home />
           </ProtectedRoute>
         </Switch>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

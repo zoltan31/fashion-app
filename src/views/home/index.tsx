@@ -3,7 +3,7 @@ import AppLayout from "../../components/AppLayout";
 
 export default function Home() {
   return (
-    <AppLayout>
+    <AppLayout title="Home">
       <div>Hello World</div>
     </AppLayout>
   );
