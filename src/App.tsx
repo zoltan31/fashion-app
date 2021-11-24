@@ -5,6 +5,9 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import Home from "./views/home";
 import Login from "./views/login";
 import Register from "./views/register";
+import SeasonPage from "./views/season";
+import UploadPage from "./views/upload";
+import WardrobePage from "./views/wardrobe";
 
 function App() {
   return (
@@ -17,6 +20,15 @@ function App() {
           <Route path="/register">
             <Register />
           </Route>
+          <ProtectedRoute path="/season">
+            <SeasonPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/wardrobe">
+            <WardrobePage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/upload">
+            <UploadPage />
+          </ProtectedRoute>
           <ProtectedRoute path="/">
             <Home />
           </ProtectedRoute>

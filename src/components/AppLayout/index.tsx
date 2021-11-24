@@ -3,12 +3,13 @@ import React from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon, LogoutIcon } from "@heroicons/react/outline";
 import useAuth from "../../auth/AuthProvider";
+import { Link } from "react-router-dom";
 
-const navigation: { name: Title; href: string; current: boolean }[] = [
-  { name: "Home", href: "#", current: true },
-  { name: "Upload", href: "#", current: false },
-  { name: "Wardrobe", href: "#", current: false },
-  { name: "Season", href: "#", current: false },
+const navigation: { name: Title; href: string }[] = [
+  { name: "Home", href: "/" },
+  { name: "Upload", href: "/upload" },
+  { name: "Wardrobe", href: "/wardrobe" },
+  { name: "Season", href: "/season" },
 ];
 
 function classNames(...classes: string[]) {
@@ -49,19 +50,19 @@ export default function AppLayout({
                   </div>
                   <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
-                          item.current
+                          item.name === title
                             ? "border-indigo-500 text-gray-900"
                             : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300",
                           "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                         )}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={item.name === title ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -94,12 +95,12 @@ export default function AppLayout({
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      item.current
+                      item.name === title
                         ? "bg-indigo-50 border-indigo-500 text-indigo-700"
                         : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800",
                       "block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
                     )}
-                    aria-current={item.current ? "page" : undefined}
+                    aria-current={item.name === title ? "page" : undefined}
                   >
                     {item.name}
                   </a>
@@ -121,7 +122,7 @@ export default function AppLayout({
           <header>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <h1 className="text-3xl font-bold leading-tight text-gray-900">
-                Home
+                {title}
               </h1>
             </div>
           </header>
