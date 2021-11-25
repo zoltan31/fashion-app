@@ -8,7 +8,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     await login();
-    history.push("/home");
+    history.push("/");
   };
 
   return (

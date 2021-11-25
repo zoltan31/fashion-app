@@ -6,17 +6,16 @@ import useAuth from "../../auth/AuthProvider";
 import { Link } from "react-router-dom";
 
 const navigation: { name: Title; href: string }[] = [
-  { name: "Home", href: "/" },
+  { name: "Season", href: "/" },
   { name: "Upload", href: "/upload" },
   { name: "Wardrobe", href: "/wardrobe" },
-  { name: "Season", href: "/season" },
 ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-type Title = "Home" | "Upload" | "Wardrobe" | "Season";
+type Title = "Upload" | "Wardrobe" | "Season";
 
 type Props = {
   title?: Title;
