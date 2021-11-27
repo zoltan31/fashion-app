@@ -8,10 +8,11 @@ type Props = {
 
 export default function ProtectedRoute({
   children,
+  path,
 }: React.PropsWithChildren<Props>) {
   const { authed } = useAuth();
 
   const element = authed ? children : <Redirect to="/login" />;
 
-  return <Route>{element}</Route>;
+  return <Route path={path}>{element}</Route>;
 }

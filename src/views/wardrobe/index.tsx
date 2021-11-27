@@ -1,63 +1,26 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import AppLayout from "../../components/AppLayout";
 import Dropdown, { Action } from "../../components/Dropdown";
 
-const DELETE_URL = "http://localhost:3000";
+const DELETE_URL = "http://localhost:8000/cloth/";
+const GET_URL = "http://localhost:8000/cloth/";
 
-const _clothes = [
-  {
-    id: 1,
-    name: "Basic Tee",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    style: "Retro",
-    type: "T-shirt",
-    selected: false,
-  },
-  {
-    id: 2,
-    name: "Basic Tee",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    style: "Hipster",
-    type: "T-shirt",
-    selected: false,
-  },
-  {
-    id: 3,
-    name: "Basic Tee",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    style: "Goth",
-    type: "T-shirt",
-    selected: false,
-  },
-  {
-    id: 4,
-    name: "Basic Tee",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    style: "Casual",
-    type: "T-shirt",
-    selected: false,
-  },
-  {
-    id: 5,
-    name: "Basic Tee",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    style: "Casual",
-    type: "T-shirt",
-    selected: false,
-  },
-];
+type Cloth = {
+  id: number;
+  name: string;
+  image: string;
+  style: string;
+  type: string;
+  selected: boolean;
+};
 
 export default function WardrobePage() {
-  const [clothes, setClothes] = useState(_clothes);
+  const [clothes, setClothes] = useState<Cloth[]>([]);
+  const history = useHistory();
 
   const changeChecked = useCallback(
     (id: number, newValue: boolean) => {
-      console.log("change");
       setClothes((prevClothes) => {
         prevClothes[id].selected = newValue;
         return [...prevClothes];
@@ -66,8 +29,23 @@ export default function WardrobePage() {
     [setClothes]
   );
 
+  const loadClothes = () => {
+    fetch(GET_URL)
+      .then((res) => res.json())
+      .then((res) => setClothes(res))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    loadClothes();
+  }, [setClothes]);
+
   const onDelete = useCallback(async (id: number) => {
-    // fetch(DELETE_URL)
+    fetch(`${DELETE_URL}${id}`, {
+      method: "DELETE",
+    })
+      .then(loadClothes)
+      .catch((err) => console.log(err));
   }, []);
 
   const deleteAllSelected = useCallback(() => {
@@ -106,9 +84,9 @@ export default function WardrobePage() {
                     onChange={(e) => changeChecked(index, e.target.checked)}
                   />
                 </div>
-                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none cursor-pointer">
+                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                   <img
-                    src={cloth.imageSrc}
+                    src={cloth.image}
                     alt="cloth visual"
                     className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                   />
@@ -118,8 +96,10 @@ export default function WardrobePage() {
                     <h3 className="text-sm text-gray-700">
                       <span
                         aria-hidden="true"
-                        onClick={() => changeChecked(index, !cloth.selected)}
-                        className="absolute inset-0"
+                        className="absolute inset-0 cursor-pointer"
+                        onClick={() => {
+                          history.push(`/wardrobe/${cloth.id}`);
+                        }}
                       />
                       {cloth.name}
                     </h3>

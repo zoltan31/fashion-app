@@ -1,7 +1,7 @@
-import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthProvider";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import ClothPage from "./views/cloth";
 import Login from "./views/login";
 import Register from "./views/register";
 import SeasonPage from "./views/season";
@@ -19,6 +19,9 @@ function App() {
           <Route path="/register">
             <Register />
           </Route>
+          <ProtectedRoute path="/wardrobe/:id">
+            <ClothPage />
+          </ProtectedRoute>
           <ProtectedRoute path="/wardrobe">
             <WardrobePage />
           </ProtectedRoute>
