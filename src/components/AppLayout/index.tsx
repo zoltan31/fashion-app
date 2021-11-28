@@ -1,8 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import React from "react";
 import { Disclosure } from "@headlessui/react";
-import { MenuIcon, XIcon, LogoutIcon } from "@heroicons/react/outline";
-import useAuth from "../../auth/AuthProvider";
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 
 const navigation: { name: Title; href: string }[] = [
@@ -25,8 +24,6 @@ export default function AppLayout({
   children,
   title,
 }: React.PropsWithChildren<Props>) {
-  const { logout } = useAuth();
-
   return (
     <div className="min-h-screen bg-gray-100">
       <Disclosure as="nav" className="bg-white shadow-sm">
@@ -65,14 +62,6 @@ export default function AppLayout({
                     ))}
                   </div>
                 </div>
-                <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                  <button
-                    onClick={logout}
-                    className="bg-white flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    <LogoutIcon className="block h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
                 <div className="-mr-2 flex items-center sm:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -104,12 +93,6 @@ export default function AppLayout({
                     {item.name}
                   </a>
                 ))}
-                <button
-                  onClick={logout}
-                  className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
-                >
-                  Logout
-                </button>
               </div>
             </Disclosure.Panel>
           </>
